@@ -13,7 +13,7 @@ rclpy.init()
 
 # 브릿지 생성
 ros_node = RosBridge()
-ros_node.socketio = socketio  # 웹 emit 연결
+ros_node.socketio = socketio
 
 # ROS spin thread
 ros_thread = threading.Thread(
@@ -22,7 +22,6 @@ ros_thread = threading.Thread(
     daemon=True
 )
 ros_thread.start()
-
 
 @app.route('/')
 def index():
@@ -44,23 +43,15 @@ def handle_mode_select(data):
 # 웹 → ROS2 (STOP)
 @socketio.on('stop_signal')
 def handle_stop_signal(msg):
-    # ⭐ 수정: publish_stop 함수는 인수를 받지 않도록 통일했습니다.
     ros_node.publish_stop() 
     print("[Web → ROS] stop_signal TRUE")
 
-# ⭐ 웹 → ROS2 (RECOVERY) 핸들러 추가 ⭐
+# 웹 → ROS2 (RECOVERY) 핸들러
 @socketio.on('recovery_signal')
 def handle_recovery_signal(msg):
-    # Recovery 신호를 받으면 ROS Bridge의 publish_recovery 함수 호출
     ros_node.publish_recovery()
     print("[Web → ROS] recovery_signal TRUE")
     
-# 웹 → ROS2 (END)
-@socketio.on('end_signal')
-def handle_end_signal(msg):
-    ros_node.publish_end()
-    print("[Web → ROS] end_signal TRUE")
 
-    
 if __name__ == '__main__':
     socketio.run(app, host='0.0.0.0', port=5000)
