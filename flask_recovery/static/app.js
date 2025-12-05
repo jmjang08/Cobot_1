@@ -25,23 +25,16 @@ function pressStop() {
     console.log("🛑 STOP pressed");
     
     pauseTimer(); 
-    document.getElementById("progress_text").innerHTML = "정지 중";
+    document.getElementById("progress_text").innerHTML = "📡 상태 : 일시 정지됨";
 }
 
-// 🔄 RECOVERY (완전 초기화 기능으로 변경) ⭐ 수정됨 ⭐
+// 🔄 RECOVERY
 function pressRecovery() {
     socket.emit("recovery_signal", true);
     console.log("🔄 RECOVERY pressed - System Reset");
     
     resetSystem();
-    document.getElementById("progress_text").innerHTML = "리커버리 중";
-
-    // ⭐ 여기서만 토핑 선택 초기화 ⭐
-    eggSelected = false;
-    greenSelected = false;
-
-    document.getElementById("btn_egg").classList.remove("selected");
-    document.getElementById("btn_green").classList.remove("selected");
+    document.getElementById("progress_text").innerHTML = "📡 상태 (0) : 초기 대기 중";
 }
 
 // START (새로운 주문 시작)
@@ -54,37 +47,20 @@ function pressStart() {
     socket.emit("mode_select", {mode: mode});
     socket.emit("start_signal", true);
 
-    // ⭐ 모드별 타이머 실행
-    if (mode === 0) startNewTimer0();
-    if (mode === 1) startNewTimer1();
-    if (mode === 2) startNewTimer2();
-    if (mode === 3) startNewTimer3();
+    startNewTimer(); // 타이머를 6분부터 새로 시작
 
-    // ❌ 삭제해라 — START 눌러도 선택 유지해야 하니까
-    // eggSelected = false;
-    // greenSelected = false;
-    // document.getElementById("btn_egg").classList.remove("selected");
-    // document.getElementById("btn_green").classList.remove("selected");
+    // 선택 초기화
+    eggSelected = false;
+    greenSelected = false;
+    document.getElementById("btn_egg").classList.remove("selected");
+    document.getElementById("btn_green").classList.remove("selected");
 }
 
 
 /* ---------------- 타이머 ---------------- */
-
-
-function startNewTimer0() {
-    currentSec = 260; // 시간을 6분으로 리셋
-    resumeTimer();
-}
-function startNewTimer1() {
-    currentSec = 295; // 시간을 6분으로 리셋
-    resumeTimer();
-}
-function startNewTimer2() {
-    currentSec = 295; // 시간을 6분으로 리셋
-    resumeTimer();
-}
-function startNewTimer3() {
-    currentSec = 330; // 시간을 6분으로 리셋
+// 1. 타이머를 6분(360초)부터 새로 시작하는 함수
+function startNewTimer() {
+    currentSec = 360; // 시간을 6분으로 리셋
     resumeTimer();
 }
 
@@ -100,27 +76,21 @@ function resumeTimer() {
 
         if (currentSec <= 0) {
             clearInterval(timerInterval);
-            // ⭐ NEW: 서버에 end_signal 전송 ⭐
-            socket.emit("end_signal", true);
-            console.log("🍜 end_signal emitted to server!");
-
-            return;
         }
-
-        currentSec--;
+        currentSec--; 
     }, 1000);
 }
 
 // 3. 타이머 작동만 중지하는 함수 (pause)
 function pauseTimer() {
-    clearInterval(timerInterval); // 타이머 작동만 중지하고, currentSec 값은 유지
+    clearInterval(timerInterval);
 }
 
-// 🛑 4. 시스템 완전 초기화 함수 (Recovery 버튼 전용) ⭐ 새로 추가 ⭐
+// 4. 시스템 완전 초기화 함수 (Recovery 버튼 전용)
 function resetSystem() {
-    clearInterval(timerInterval); // 작동 중인 타이머 정지
-    currentSec = 360; // 남은 시간 변수를 6분으로 초기화
-    document.getElementById("timer").innerText = "06:00"; // 화면 표시 초기화
+    clearInterval(timerInterval);
+    currentSec = 360;
+    document.getElementById("timer").innerText = "06:00";
 }
 
 
@@ -128,30 +98,13 @@ function resetSystem() {
 socket.on("progress_update", (data) => {
     let msg = "";
     switch (data.state) {
-        case 0: msg = "대기중"; break;    
         case 1: msg = "냄비 놓는 중.."; break;
         case 2: msg = "물 따르는 중.."; break;
         case 3: msg = "면 넣는 중.."; break;
-        case 4: msg = "스프/고명 넣는 중.."; break;
-        case 5: msg = "라면 끓이는 중.."; break;
-        case 6: msg = "물 끓이는 중.."; break;
-
-        /* 🛑⭐ 재료 소진 경고 로직 ⭐🛑 */
-        case 7:
-            document.getElementById("progress_text").style.color = "red";
-            document.getElementById("progress_text").innerHTML =
-                "⚠ 재료가 소진되었습니다!";
-            
-            pauseTimer();
-            alert("⚠ 재료가 소진되었습니다! \n재료를 채워주세요.");
-
-            return; 
-        case 8: msg = "라면이 완성되었습니다! 🍜✨"; break;
+        case 4: msg = "소스 넣는 중.."; break;
+        default: msg = "알 수 없음";
     }
 
-    // 정상 동작일 때 기본 메시지 출력
-    const progress = document.getElementById("progress_text");
-    progress.style.color = "#000";  
-    progress.innerHTML = `${msg}`;
+    document.getElementById("progress_text").innerHTML =
+        `📡 상태 (${data.state}) : ${msg}`;
 });
-
