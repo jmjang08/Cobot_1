@@ -493,34 +493,31 @@ def perform_task(node, mode):
             open_gripper()
             movel(L_cup3_back, vel=VEL, acc=ACC)
             home_return()
-            
-            
-    
+        
     # === 전체 조리 실행 ===
-    # move_pot()
-    # drop_water()
+    move_pot()
+    drop_water()
 
-    # publish_state(6)  # 물 끓이는 중
-    # dance(7)
-    # home_return()
-    # pour_sauce()
+    publish_state(6)  # 물 끓이는 중
+    dance(7)
+    home_return()
+    pour_sauce()
     home_return()
     open_gripper()
     take_noodle()
 
-    # publish_state(5)  # 라면 끓이는 중
-    # # ⭐ 최종 END SIGNAL 대기
-    # print("🍜 조리 완료 → END SIGNAL 대기중…")
-    # while not end_received:
-    #     rclpy.spin_once(node, timeout_sec=0.2)
-    #     dance(1)
-    # publish_state(8)
-    # end_motion()
-    # publish_state(0)
-    # home_return()
+    publish_state(5)  # 라면 끓이는 중
+    # ⭐ 최종 END SIGNAL 대기
+    print("🍜 조리 완료 → END SIGNAL 대기중…")
+    while not end_received:
+        rclpy.spin_once(node, timeout_sec=0.2)
+        dance(1)
+    publish_state(8)
+    end_motion()
+    publish_state(0)
+    home_return()
 
     
-
 # ============================================================
 # MAIN LOOP
 # ============================================================
@@ -572,7 +569,6 @@ def main(args=None):
     node.create_subscription(Bool, "/stop_signal", stop_cb, 10)
     node.create_subscription(Bool, "/recovery_signal", recovery_cb, 10)
     node.create_subscription(Bool, "/end_signal", end_cb, 10)
-
 
     print("=== Robot Ready. Waiting... ===")
 
