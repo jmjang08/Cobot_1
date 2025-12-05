@@ -1,12 +1,12 @@
 /* 전체 */
 body {
-    font-family: 'Noto Sans KR', sans-serif; /* 글꼴 변경 */
+    font-family: 'Noto Sans KR', sans-serif;
     background-color: #f4f6f9; 
     margin: 0;
     padding: 0;
     text-align: center;
     position: relative;
-    overflow-x: hidden; /* 좌우 스크롤 방지 */
+    overflow-x: hidden;
 }
 
 /* 양옆 라면 패턴 */
@@ -16,11 +16,11 @@ body::after {
     position: fixed;
     top: 0;
     bottom: 0;
-    width: 180px;             /* 패턴 폭 */
+    width: 180px;
     background-image: url("/static/ramen_pattern1.png");
     background-repeat: repeat-y;
-    background-size: 215px;   /* 이미지 크기 */
-    opacity: 0.3;            /* 흐린 정도 (0.1~0.2 추천) */
+    background-size: 215px;
+    opacity: 0.3;
     z-index: -1;
     pointer-events: none;
 }
@@ -112,7 +112,7 @@ body::after {
 
 .start-btn:active {
     transform: scale(0.98);
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2) inset; /* 눌린 듯한 그림자 */
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2) inset;
 }
 
 /* 고명 버튼 */
@@ -147,19 +147,17 @@ body::after {
 }
 
 .timer {
-    font-size: 3.5em; /* 폰트 크기 대폭 확대 */
-    font-weight: 700; /* 두껍게 */
-    color: #E74C3C; /* 눈에 띄는 빨간색 */
+    font-size: 3.5em; 
+    font-weight: 700;
+    color: #E74C3C;
     margin-top: 5px;
 }
 
-/* style.css 파일의 recovery-btn 부분 수정 */
-
-/* 🛑 RECOVERY 버튼 스타일 (기존 코드) */
+/* 🛑 RECOVERY 버튼 스타일 */
 .recovery-btn {
     width: 100%; 
     padding: 14px;
-    background: #4CAF50; /* 녹색 계열 */
+    background: #4CAF50;
     color: white;
     border-radius: 12px;
     border: none;
@@ -174,8 +172,8 @@ body::after {
     background: #45A049;
 }
 
-/* ⭐ Recovery 버튼을 클릭했을 때 (꾹 눌릴 때) 효과 추가 ⭐ */
+/* Recovery 버튼을 클릭했을 때 (꾹 눌릴 때) 효과 */
 .recovery-btn:active {
-    transform: scale(0.98); /* 버튼 크기를 살짝 줄여서 눌리는 느낌 */
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2) inset; /* 그림자를 안쪽으로 넣어 버튼이 들어간 것처럼 보이게 함 */
+    transform: scale(0.98);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2) inset;
 }
