@@ -1,0 +1,181 @@
+/* 전체 */
+body {
+    font-family: 'Noto Sans KR', sans-serif; /* 글꼴 변경 */
+    background-color: #f4f6f9; 
+    margin: 0;
+    padding: 0;
+    text-align: center;
+    position: relative;
+    overflow-x: hidden; /* 좌우 스크롤 방지 */
+}
+
+/* 양옆 라면 패턴 */
+body::before,
+body::after {
+    content: "";
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    width: 180px;             /* 패턴 폭 */
+    background-image: url("/static/ramen_pattern1.png");
+    background-repeat: repeat-y;
+    background-size: 215px;   /* 이미지 크기 */
+    opacity: 0.3;            /* 흐린 정도 (0.1~0.2 추천) */
+    z-index: -1;
+    pointer-events: none;
+}
+
+body::before {
+    left: 0;
+}
+
+body::after {
+    right: 0;
+}
+
+/* HERO 라면 이미지 */
+.hero {
+    position: relative;
+    padding-top: 40px;
+    margin-bottom: 20px;
+}
+
+.ramen-img {
+    width: 260px;
+    filter: drop-shadow(0px 8px 18px rgba(0,0,0,0.15));
+}
+
+.stop-btn {
+    width: 100%;
+    padding: 14px;
+    background: #ff4b4b;
+    color: white;
+    border-radius: 12px;
+    border: none;
+    font-size: 20px;
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: 0.2s;
+}
+
+.stop-btn:hover {
+    background: #ff1f1f;
+}
+
+.stop-btn:active {
+    transform: scale(0.97);
+}
+
+.steam {
+    position: absolute;
+    top: 10px;
+    left: 50%;
+    width: 140px;
+    opacity: 0.6;
+    transform: translateX(-50%);
+}
+
+.hero-title {
+    margin-top: 10px;
+    font-size: 28px;
+    font-weight: 600;
+}
+
+/* 카드 스타일 */
+.card {
+    background: #fafafa;
+    width: 360px;
+    margin: 20px auto;
+    padding: 25px;
+    border-radius: 18px;
+    box-shadow: 0 4px 14px rgba(0,0,0,0.08);
+}
+
+/* START */
+.start-btn {
+    width: 100%;
+    padding: 14px;
+    background: rgba(255,255,255,0.35);
+    backdrop-filter: blur(10px);
+    border-radius: 12px;
+    border: 1px solid #d0d0d0;
+    font-size: 20px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.start-btn:hover {
+    background: rgba(255,255,255,0.55);
+}
+
+.start-btn:active {
+    transform: scale(0.98);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2) inset; /* 눌린 듯한 그림자 */
+}
+
+/* 고명 버튼 */
+.mode-btn {
+    width: 140px;
+    padding: 12px;
+    margin: 10px;
+    font-size: 16px;
+    border-radius: 12px;
+    border: 1px solid #e0e0e0;
+    background: #ffffff;
+    cursor: pointer;
+    transition: 0.2s;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.04);
+}
+
+.mode-btn.selected {
+    background: #ffdd57;
+    border-color: #f0c933;
+    transform: scale(1.07);
+    box-shadow: 0 6px 14px rgba(255,215,0,0.45);
+}
+
+/* 상태 */
+.status-card {
+    margin-bottom: 60px;
+}
+
+.status-text {
+    font-size: 22px;
+    margin-bottom: 10px;
+}
+
+.timer {
+    font-size: 3.5em; /* 폰트 크기 대폭 확대 */
+    font-weight: 700; /* 두껍게 */
+    color: #E74C3C; /* 눈에 띄는 빨간색 */
+    margin-top: 5px;
+}
+
+/* style.css 파일의 recovery-btn 부분 수정 */
+
+/* 🛑 RECOVERY 버튼 스타일 (기존 코드) */
+.recovery-btn {
+    width: 100%; 
+    padding: 14px;
+    background: #4CAF50; /* 녹색 계열 */
+    color: white;
+    border-radius: 12px;
+    border: none;
+    font-size: 20px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.2s;
+    box-shadow: 0 4px 14px rgba(76, 175, 80, 0.4);
+}
+
+.recovery-btn:hover {
+    background: #45A049;
+}
+
+/* ⭐ Recovery 버튼을 클릭했을 때 (꾹 눌릴 때) 효과 추가 ⭐ */
+.recovery-btn:active {
+    transform: scale(0.98); /* 버튼 크기를 살짝 줄여서 눌리는 느낌 */
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2) inset; /* 그림자를 안쪽으로 넣어 버튼이 들어간 것처럼 보이게 함 */
+}

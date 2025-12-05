@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>🍜 라면 주문 시스템</title>
+    <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
+
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+
+<body>
+
+<!-- ⭐ 상단 Hero 영역 -->
+<div class="hero">
+    <img src="/static/ramen.png" class="ramen-img" alt="Ramen">
+    <div class="hero-title">🍜 셰프가 로봇이라면! 🍜</div>
+</div>
+
+<!-- ⭐ 카드: 고명 선택 -->
+<div class="card">
+    <h3>토핑 선택</h3>
+
+    <button id="btn_egg" class="mode-btn" onclick="toggleEgg()">🥚 계란 추가</button>
+    <button id="btn_green" class="mode-btn" onclick="toggleGreen()">🥬 파 추가</button>
+</div>
+
+<!-- ⭐ 카드: START -->
+<div class="card">
+    <button class="start-btn" onclick="pressStart()">주문</button>
+</div>
+
+<div class="card">
+    <button class="stop-btn" onclick="pressStop()">🔴 주문 취소 🔴</button>
+</div>
+
+<div class="card"> 
+    <button id="btn_recovery" class="recovery-btn" onclick="pressRecovery()">🔄 복구 모드 🔄</button>
+</div>
+
+<!-- ⭐ 상태 + 타이머 -->
+<div class="card status-card">
+    <p id="progress_text" class="status-text">대기중</p>
+    <p id="timer" class="timer">00:00</p>
+</div>
+
+<script src="/static/app.js"></script>
+</body>
+</html>
