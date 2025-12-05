@@ -1,4 +1,3 @@
-import rclpy
 from rclpy.node import Node
 from std_msgs.msg import Bool, Int32
 
@@ -15,7 +14,6 @@ class RosBridge(Node):
         self.mode_pub  = self.create_publisher(Int32, "/mode_select", 10)
         self.stop_pub  = self.create_publisher(Bool, "/stop_signal", 10)
         self.recovery_pub = self.create_publisher(Bool, "/recovery_signal", 10) # Recovery 퍼블리셔 정의
-        self.end_pub = self.create_publisher(Bool, "/end_signal", 10)
         
         # ROS → 웹 구독자
         self.create_subscription(
@@ -28,12 +26,6 @@ class RosBridge(Node):
         print("RosBridge Ready.")
 
     # START publish
-    def publish_end(self):
-        msg = Bool()
-        msg.data = True
-        self.end_pub.publish(msg)
-        self.get_logger().info("Publish /end_signal TRUE")
-    
     def publish_start(self, flag: bool):
         msg = Bool()
         msg.data = flag
@@ -47,7 +39,7 @@ class RosBridge(Node):
         self.mode_pub.publish(msg)
         self.get_logger().info(f"Publish /mode_select {mode}")
 
-    # ⭐ STOP publish (함수 인수를 제거하여 app.py와 통일)
+    # ⭐ STOP publish
     def publish_stop(self):
         msg = Bool()
         msg.data = True # STOP은 항상 True 발행
@@ -59,7 +51,7 @@ class RosBridge(Node):
         msg = Bool()
         msg.data = True # RECOVERY는 항상 True 발행
         self.recovery_pub.publish(msg)
-        self.get_logger().info("--- PUBLISHED: /recovery_signal TRUE ---") # Recovery 로그 추가
+        self.get_logger().info("--- PUBLISHED: /recovery_signal TRUE ---")
 
     # ROS → Web emit
     def cb_progress(self, msg: Int32):
